@@ -2,20 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer base {
+  /* 
+   * Hide Arrows From Input Number
+   * see: https://www.w3schools.com/howto/howto_css_hide_arrow_number.asp
+   */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button,
+  input[type='number'] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  a {
+    @apply text-orange-500;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .primary-btn {
+    @apply bg-orange-500 hover:bg-orange-400 rounded-md w-full text-center text-lg text-white transition-colors font-medium disabled:bg-neutral-400 disabled:text-neutral-300 disabled:cursor-not-allowed;
+  }
 }
