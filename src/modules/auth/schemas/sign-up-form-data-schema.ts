@@ -6,8 +6,8 @@ import {
   USER_FIELDS,
   USERNAME_MAX_LENGTH,
   USERNAME_MIN_LENGTH,
-} from '@/modules/user/lib/constants';
-import { AUTH_FIELDS } from '../lib/constants';
+} from '@/modules/user/lib';
+import { AUTH_FIELDS } from '../lib';
 
 const UsernameSchema = z
   .string({

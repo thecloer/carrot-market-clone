@@ -1,9 +1,9 @@
 'use server';
 
-import { AUTH_FIELDS } from '@/modules/auth/lib/constants';
-import { SignupFromDataSchema } from '@/modules/auth/schemas/sign-up-form-data-schema';
-import { ErrorResponse } from '@/modules/global/lib/types';
-import { USER_FIELDS } from '@/modules/user/lib/constants';
+import { ActionErrorResponse } from '@/modules/global/lib';
+import { SignupFromDataSchema } from '@/modules/auth/schemas';
+import { AUTH_FIELDS } from '@/modules/auth/lib';
+import { USER_FIELDS } from '@/modules/user/lib';
 
 type SignupFormData = typeof SignupFromDataSchema._type;
 
