@@ -1,21 +1,21 @@
 'use server';
 
 import { ActionErrorResponse } from '@/modules/global/lib';
-import { SignupFromDataSchema } from '@/modules/auth/schemas';
+import { SignUpFromDataSchema } from '@/modules/auth/schemas';
 import { AUTH_FIELDS } from '@/modules/auth/lib';
 import { USER_FIELDS } from '@/modules/user/lib';
 
-type SignupFormData = typeof SignupFromDataSchema._type;
-type SignupActionResponse = Promise<void | ActionErrorResponse<SignupFormData>>;
+type SignUpFormData = typeof SignUpFromDataSchema._type;
+type SignUpActionResponse = Promise<void | ActionErrorResponse<SignUpFormData>>;
 
-export const signUpAction = async (prevState: unknown, formData: FormData): SignupActionResponse => {
+export const signUpAction = async (prevState: unknown, formData: FormData): SignUpActionResponse => {
   const fieldValues = {
     [USER_FIELDS.username]: formData.get(USER_FIELDS.username)?.toString(),
     [USER_FIELDS.email]: formData.get(USER_FIELDS.email)?.toString(),
     [USER_FIELDS.password]: formData.get(USER_FIELDS.password)?.toString(),
     [AUTH_FIELDS.confirmPassword]: formData.get(AUTH_FIELDS.confirmPassword)?.toString(),
   };
-  const validateResult = await SignupFromDataSchema.safeParseAsync(fieldValues);
+  const validateResult = SignUpFromDataSchema.safeParse(fieldValues);
   if (!validateResult.success) {
     return { fieldValues, error: validateResult.error.flatten() };
   }
