@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { FormButton, FormInput, SocialLogin } from '@/components/form';
+import { FormButton, FormInput } from '@/modules/global/components';
+import { SocialLogin } from '@/modules/auth/components';
 
 export default function SignUpPage() {
   return (

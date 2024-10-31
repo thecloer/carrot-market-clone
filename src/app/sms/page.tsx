@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { FormInput, FormButton } from '@/components/form';
+import { FormInput, FormButton } from '@/modules/global/components';
 
 export default function SMSLoginPage() {
   return (
