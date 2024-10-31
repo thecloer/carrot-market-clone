@@ -1,1 +1,1 @@
-export * from './sign-up-form-data-schema';
+export * from './auth-schemas';

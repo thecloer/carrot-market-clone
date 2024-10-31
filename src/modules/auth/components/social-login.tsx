@@ -1,7 +1,6 @@
-import { IoChatbubbleEllipses, IoLogoGithub } from 'react-icons/io5';
-
 import React from 'react';
 import Link from 'next/link';
+import { IoChatbubbleEllipses, IoLogoGithub } from 'react-icons/io5';
 
 const socials = [
   { text: 'Continue with SMS', Icon: IoChatbubbleEllipses, href: '/sms' },
