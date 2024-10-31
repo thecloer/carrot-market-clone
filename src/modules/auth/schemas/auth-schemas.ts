@@ -9,3 +9,8 @@ export const SignUpFromDataSchema = z.object({
   [USER_FIELDS.password]: PasswordSchema,
   [AUTH_FIELDS.confirmPassword]: PasswordSchema,
 });
+
+export const SignInFromDataSchema = z.object({
+  [USER_FIELDS.email]: EmailSchema,
+  [USER_FIELDS.password]: PasswordSchema,
+});
