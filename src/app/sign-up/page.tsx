@@ -8,7 +8,7 @@ import { PASSWORD_MIN_LENGTH, USER_FIELDS, USERNAME_MAX_LENGTH, USERNAME_MIN_LEN
 import { signUpAction } from './actions';
 
 export default function SignUpPage() {
-  const [state, action] = useActionState(signUpAction, null);
+  const [state, dispatch, isPending] = useActionState(signUpAction, null);
 
   return (
     <main className='flex flex-col gap-y-10 p-6'>
@@ -16,13 +16,14 @@ export default function SignUpPage() {
         <h1 className='text-2xl'>Welcome!</h1>
         <h2 className='text-xl'>Fill in the form below to join.</h2>
       </div>
-      <form action={action} className='flex flex-col gap-y-3'>
+      <form action={dispatch} className='flex flex-col gap-y-3'>
         <FormInput
           type='text'
           name={USER_FIELDS.username}
           placeholder='Username'
           autoComplete='username'
           required
+          defaultValue={state?.fieldValues.username}
           errors={state?.error.fieldErrors.username}
           minLength={USERNAME_MIN_LENGTH}
           maxLength={USERNAME_MAX_LENGTH}
@@ -33,6 +34,7 @@ export default function SignUpPage() {
           placeholder='Email'
           autoComplete='email'
           required
+          defaultValue={state?.fieldValues.email}
           errors={state?.error.fieldErrors.email}
         />
         <FormInput
@@ -41,6 +43,7 @@ export default function SignUpPage() {
           autoComplete='new-password'
           placeholder='Password'
           required
+          defaultValue={state?.fieldValues.password}
           errors={state?.error.fieldErrors.password}
           minLength={PASSWORD_MIN_LENGTH}
         />
@@ -50,10 +53,13 @@ export default function SignUpPage() {
           autoComplete='new-password'
           placeholder='Confirm Password'
           required
+          defaultValue={state?.fieldValues.confirm_password}
           errors={state?.error.fieldErrors.confirm_password}
           minLength={PASSWORD_MIN_LENGTH}
         />
-        <FormButton type='submit'>Sign up</FormButton>
+        <FormButton type='submit' disabled={isPending}>
+          Sign up
+        </FormButton>
       </form>
       <SocialLogin />
     </main>
