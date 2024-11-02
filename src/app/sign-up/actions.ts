@@ -3,7 +3,9 @@
 import { ActionErrorResponse, objectMap } from '@/modules/global/lib';
 import { SignUpFromDataSchema } from '@/modules/auth/schemas';
 import { AUTH_FIELDS } from '@/modules/auth/lib';
+import { UserRepository } from '@/modules/user/repositories';
 import { USER_FIELDS } from '@/modules/user/lib';
+import { hashPassword } from '@/modules/auth/lib/hash-password';
 
 type SignUpFormData = typeof SignUpFromDataSchema._type;
 type SignUpActionResponse = Promise<void | ActionErrorResponse<SignUpFormData>>;
@@ -23,8 +25,10 @@ export const signUpAction = async (prevState: unknown, formData: FormData): Sign
     };
   }
 
-  const { data } = validateResult;
+  const { username, email, password } = validateResult.data;
 
-  // FIXME: Implement user signup logic here and remove the console.log
-  console.log('User signup with: ', data);
+  const hashedPassword = await hashPassword(password);
+  const user = await UserRepository.createByEmail({ username, email, password: hashedPassword });
+
+  console.log('User signed up:', user);
 };
