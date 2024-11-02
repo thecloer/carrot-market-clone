@@ -23,7 +23,7 @@ export default function SignInPage() {
           autoComplete='email'
           required
           defaultValue={state?.fieldValues.email}
-          errors={state?.error.fieldErrors.email}
+          errors={state?.errors.fieldErrors.email}
           minLength={USERNAME_MIN_LENGTH}
           maxLength={USERNAME_MAX_LENGTH}
         />
@@ -34,7 +34,7 @@ export default function SignInPage() {
           placeholder='Password'
           required
           defaultValue={state?.fieldValues.password}
-          errors={state?.error.fieldErrors.password}
+          errors={state?.errors.fieldErrors.password}
           minLength={PASSWORD_MIN_LENGTH}
         />
         <FormButton type='submit' disabled={isPending}>

@@ -4,7 +4,7 @@ type allKeys<T> = T extends unknown ? keyof T : never;
 type FormValidationError<T> = typeToFlattenedError<T, string>;
 
 interface FormError<T> {
-  error: FormValidationError<T>;
+  errors: FormValidationError<T>;
 }
 
 interface FormFieldValues<T> {

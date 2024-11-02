@@ -24,7 +24,7 @@ export default function SignUpPage() {
           autoComplete='username'
           required
           defaultValue={state?.fieldValues.username}
-          errors={state?.error.fieldErrors.username}
+          errors={state?.errors.fieldErrors.username}
           minLength={USERNAME_MIN_LENGTH}
           maxLength={USERNAME_MAX_LENGTH}
         />
@@ -35,7 +35,7 @@ export default function SignUpPage() {
           autoComplete='email'
           required
           defaultValue={state?.fieldValues.email}
-          errors={state?.error.fieldErrors.email}
+          errors={state?.errors.fieldErrors.email}
         />
         <FormInput
           type='password'
@@ -44,7 +44,7 @@ export default function SignUpPage() {
           placeholder='Password'
           required
           defaultValue={state?.fieldValues.password}
-          errors={state?.error.fieldErrors.password}
+          errors={state?.errors.fieldErrors.password}
           minLength={PASSWORD_MIN_LENGTH}
         />
         <FormInput
@@ -54,7 +54,7 @@ export default function SignUpPage() {
           placeholder='Confirm Password'
           required
           defaultValue={state?.fieldValues.confirm_password}
-          errors={state?.error.fieldErrors.confirm_password}
+          errors={state?.errors.fieldErrors.confirm_password}
           minLength={PASSWORD_MIN_LENGTH}
         />
         <FormButton type='submit' disabled={isPending}>
