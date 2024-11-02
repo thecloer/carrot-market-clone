@@ -3,7 +3,7 @@ import { typeToFlattenedError } from 'zod';
 type allKeys<T> = T extends unknown ? keyof T : never;
 type FormValidationError<T> = typeToFlattenedError<T, string>;
 
-interface FormError<T> {
+export interface FormError<T> {
   errors: FormValidationError<T>;
 }
 

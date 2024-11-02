@@ -14,3 +14,6 @@ export const SignInFromDataSchema = z.object({
   [USER_FIELDS.email]: EmailSchema,
   [USER_FIELDS.password]: PasswordSchema,
 });
+
+// TODO: Implement the verification code issuing and verification logic
+export const VerificationCodeSchema = z.coerce.number().int().min(100000).max(999999);
