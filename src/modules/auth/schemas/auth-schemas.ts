@@ -1,8 +1,14 @@
 import { z } from 'zod';
 import { EmailSchema, PasswordSchema, UsernameSchema } from '@/modules/user/schemas';
 import { USER_FIELDS } from '@/modules/user/lib';
-import { AUTH_FIELDS, doesConfirmPasswordMatch } from '../lib';
+import {
+  AUTH_FIELDS,
+  superDoesConfirmPasswordMatch,
+  superIsEmailUnique,
+  superIsUsernameUnique,
+} from '../lib';
 
+// type SignUpFromData = typeof SignUpFromDataSchema._type;
 export const SignUpFromDataSchema = z
   .object({
     [USER_FIELDS.username]: UsernameSchema,
@@ -10,10 +16,9 @@ export const SignUpFromDataSchema = z
     [USER_FIELDS.password]: PasswordSchema,
     [AUTH_FIELDS.confirmPassword]: PasswordSchema,
   })
-  .refine(doesConfirmPasswordMatch, {
-    path: [AUTH_FIELDS.confirmPassword],
-    message: 'Passwords do not match.',
-  });
+  .superRefine(superDoesConfirmPasswordMatch)
+  .superRefine(superIsEmailUnique)
+  .superRefine(superIsUsernameUnique);
 
 export const SignInFromDataSchema = z.object({
   [USER_FIELDS.email]: EmailSchema,
