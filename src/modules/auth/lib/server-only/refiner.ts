@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { AUTH_FIELDS } from '.';
-import { USER_FIELDS } from '@/modules/user/lib';
 import { UserRepository } from '@/modules/user/repositories';
+import { USER_FIELDS } from '@/modules/user/lib';
+import { AUTH_FIELDS } from '..';
 
 // The process of checking if confirmPassword and password match can be done in `refine`, but if it fails, set fatal to true to prevent the next step from proceeding.
 export const superDoesConfirmPasswordMatch = (
@@ -25,7 +25,7 @@ export const superIsUsernameUnique = async (
   { username }: { [USER_FIELDS.username]: string },
   ctx: z.RefinementCtx
 ) => {
-  const usernameExist = await UserRepository.existsByUsername(username);
+  const usernameExist = await UserRepository.existsByUsername({ username });
   if (!usernameExist) return;
   ctx.addIssue({
     code: 'custom',
@@ -40,7 +40,7 @@ export const superIsEmailUnique = async (
   { email }: { [USER_FIELDS.email]: string },
   ctx: z.RefinementCtx
 ) => {
-  const emailExist = await UserRepository.existsByEmail(email);
+  const emailExist = await UserRepository.existsByEmail({ email });
   if (!emailExist) return;
   ctx.addIssue({
     code: 'custom',

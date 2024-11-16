@@ -1,14 +1,33 @@
 {
   "name": "carrot-market-clone",
+  "description": "Carrot Market Clone Project.",
+  "author": {
+    "name": "Seokgyu Choi (thecloer)",
+    "url": "https://linkedin.com/in/thecloer"
+  },
+  "keywords": [
+    "next.js",
+    "next.js v15",
+    "typescript",
+    "tailwindcss",
+    "zod",
+    "iron-session",
+    "bcrypt",
+    "prisma"
+  ],
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "prisma:format": "prisma format"
   },
   "dependencies": {
+    "@prisma/client": "^5.22.0",
     "@types/bcrypt": "^5.0.2",
     "bcrypt": "^5.1.1",
     "iron-session": "^8.0.4",
@@ -28,6 +47,7 @@
     "eslint": "^8",
     "eslint-config-next": "15.0.2",
     "postcss": "^8",
+    "prisma": "^5.22.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

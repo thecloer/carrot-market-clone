@@ -28,11 +28,17 @@ export const signInAction = async (
 
   const { email, password } = validateResult.data;
 
-  const user = await UserRepository.findByEmail(email);
+  const user = await UserRepository.findByEmail({ email });
   if (user == null) {
     return {
       fieldValues: objectMap(fieldValues, (value) => value?.toString()),
       errors: { fieldErrors: { email: ['User with this email does not exist.'] }, formErrors: [] },
+    };
+  }
+  if (user.password == null) {
+    return {
+      fieldValues: objectMap(fieldValues, (value) => value?.toString()),
+      errors: { fieldErrors: { email: ['An email unset password.'] }, formErrors: [] },
     };
   }
 

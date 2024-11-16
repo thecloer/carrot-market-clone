@@ -17,9 +17,11 @@ type VerificationCodeState = {
 } & Partial<FormError<typeof VerificationCodeSchema._type>>;
 
 type SmsSignInActionState = PhoneState | VerificationCodeState;
-type SmsSignInActionResult = Promise<SmsSignInActionState>;
 
-export const smsSignInAction = async (prevState: SmsSignInActionState, formData: FormData): SmsSignInActionResult => {
+export const smsSignInAction = async (
+  prevState: SmsSignInActionState,
+  formData: FormData
+): Promise<SmsSignInActionState> => {
   if (!prevState.isCodeIssued) {
     // [Phone Number Phase] check whether the phone number is valid
     const validateResult = PhoneSchema.safeParse(formData.get(USER_FIELDS.phone));
@@ -38,12 +40,16 @@ export const smsSignInAction = async (prevState: SmsSignInActionState, formData:
   }
 
   // [Verification Code Phase] verify the code
-  const validateResult = VerificationCodeSchema.safeParse(formData.get(AUTH_FIELDS.verificationCode));
+  const validateResult = VerificationCodeSchema.safeParse(
+    formData.get(AUTH_FIELDS.verificationCode)
+  );
   if (!validateResult.success) {
     return {
       isCodeIssued: true,
       errors: validateResult.error.flatten(),
-      fieldValues: { verification_code: formData.get(AUTH_FIELDS.verificationCode)?.toString() ?? '' },
+      fieldValues: {
+        verification_code: formData.get(AUTH_FIELDS.verificationCode)?.toString() ?? '',
+      },
     };
   }
 

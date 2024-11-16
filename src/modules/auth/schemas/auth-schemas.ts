@@ -1,12 +1,12 @@
 import { z } from 'zod';
 import { EmailSchema, PasswordSchema, UsernameSchema } from '@/modules/user/schemas';
 import { USER_FIELDS } from '@/modules/user/lib';
+import { AUTH_FIELDS } from '../lib';
 import {
-  AUTH_FIELDS,
   superDoesConfirmPasswordMatch,
   superIsEmailUnique,
   superIsUsernameUnique,
-} from '../lib';
+} from '../lib/server-only';
 
 // type SignUpFromData = typeof SignUpFromDataSchema._type;
 export const SignUpFromDataSchema = z

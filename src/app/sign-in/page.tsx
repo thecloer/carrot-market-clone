@@ -3,7 +3,12 @@
 import React, { useActionState } from 'react';
 import { FormButton, FormInput } from '@/modules/global/components';
 import { SocialLogin } from '@/modules/auth/components';
-import { PASSWORD_MIN_LENGTH, USER_FIELDS, USERNAME_MAX_LENGTH, USERNAME_MIN_LENGTH } from '@/modules/user/lib';
+import {
+  PASSWORD_MIN_LENGTH,
+  USER_FIELDS,
+  USERNAME_MAX_LENGTH,
+  USERNAME_MIN_LENGTH,
+} from '@/modules/user/lib';
 import { signInAction } from './actions';
 
 export default function SignInPage() {

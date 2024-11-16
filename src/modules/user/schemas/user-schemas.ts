@@ -1,6 +1,11 @@
 import { z } from 'zod';
 import validator from 'validator';
-import { PASSWORD_MIN_LENGTH, PASSWORD_REGEX, USERNAME_MAX_LENGTH, USERNAME_MIN_LENGTH } from '../lib';
+import {
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_REGEX,
+  USERNAME_MAX_LENGTH,
+  USERNAME_MIN_LENGTH,
+} from '../lib';
 
 export const UsernameSchema = z
   .string({

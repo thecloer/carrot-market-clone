@@ -1,33 +1,37 @@
-import { DB, type User } from '@/modules/global/lib';
+import type { User } from '@prisma/client';
+import type { NonNullableFields } from '@/modules/global/lib';
+import { prisma } from '@/modules/global/lib';
 
 export const UserRepository = {
-  async createByEmail({
+  createByEmail({
     username,
     email,
     password,
-  }: {
-    username: string;
-    email: string;
-    password: string;
-  }) {
-    const id = crypto.randomUUID();
-    const user: Readonly<User> = { id, username, email, password };
-    DB.users.set(id, { id, username, email, password });
-    return user;
+  }: NonNullableFields<Pick<User, 'username' | 'email' | 'password'>>) {
+    return prisma.user.create({ data: { username, email, password }, select: { id: true } });
   },
-  async existsByUsername(username: string) {
-    return DB.users.values().some((user) => user.username === username);
+  async existsByUsername({ username }: Pick<User, 'username'>) {
+    const result = await prisma.user.findUnique({
+      select: { id: true },
+      where: { username },
+    });
+    return result !== null;
   },
-  async existsByEmail(email: string) {
-    return DB.users.values().some((user) => user.email === email);
+  async existsByEmail({ email }: NonNullableFields<Pick<User, 'email'>>) {
+    const result = await prisma.user.findUnique({
+      select: { id: true },
+      where: { email },
+    });
+    return result !== null;
   },
-  async findById(id: string) {
-    const user: Readonly<User> | null = DB.users.get(id) ?? null;
-    return user;
+  findById({ id }: Pick<User, 'id'>) {
+    return prisma.user.findUnique({
+      where: { id },
+    });
   },
-  async findByEmail(email: string) {
-    const user: Readonly<User> | null =
-      DB.users.values().find((user) => user.email === email) ?? null;
-    return user;
+  findByEmail({ email }: NonNullableFields<Pick<User, 'email'>>) {
+    return prisma.user.findUnique({
+      where: { email },
+    });
   },
 };
