@@ -1,9 +1,17 @@
-import { DB } from '@/modules/global/lib';
+import { DB, type User } from '@/modules/global/lib';
 
 export const UserRepository = {
-  async createByEmail({ username, email, password }: { username: string; email: string; password: string }) {
+  async createByEmail({
+    username,
+    email,
+    password,
+  }: {
+    username: string;
+    email: string;
+    password: string;
+  }) {
     const id = crypto.randomUUID();
-    const user = { id, username, email, password } as const;
+    const user: Readonly<User> = { id, username, email, password };
     DB.users.set(id, { id, username, email, password });
     return user;
   },
@@ -11,12 +19,15 @@ export const UserRepository = {
     return DB.users.values().some((user) => user.username === username);
   },
   async existsByEmail(email: string) {
-    return DB.users.entries().some(([, user]) => user.email === email);
+    return DB.users.values().some((user) => user.email === email);
   },
   async findById(id: string) {
-    return DB.users.get(id) ?? null;
+    const user: Readonly<User> | null = DB.users.get(id) ?? null;
+    return user;
   },
   async findByEmail(email: string) {
-    return DB.users.values().find((user) => user.email === email) ?? null;
+    const user: Readonly<User> | null =
+      DB.users.values().find((user) => user.email === email) ?? null;
+    return user;
   },
 };

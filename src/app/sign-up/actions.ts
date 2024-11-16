@@ -5,7 +5,8 @@ import { SignUpFromDataSchema } from '@/modules/auth/schemas';
 import { AUTH_FIELDS } from '@/modules/auth/lib';
 import { UserRepository } from '@/modules/user/repositories';
 import { USER_FIELDS } from '@/modules/user/lib';
-import { hashPassword } from '@/modules/auth/lib/hash-password';
+import { hashPassword, getSession } from '@/modules/auth/lib/server-only';
+import { redirect } from 'next/navigation';
 
 type SignUpFormData = typeof SignUpFromDataSchema._type;
 type SignUpActionResponse = Promise<void | ActionErrorResponse<SignUpFormData>>;
@@ -33,5 +34,10 @@ export const signUpAction = async (
   const hashedPassword = await hashPassword(password);
   const user = await UserRepository.createByEmail({ username, email, password: hashedPassword });
 
-  console.log('User signed up:', user);
+  // set the user id in the cookie
+  const session = await getSession();
+  // save the cookie. This will send the cookie to the client
+  await session.login({ userId: user.id });
+
+  return redirect('/profile');
 };
