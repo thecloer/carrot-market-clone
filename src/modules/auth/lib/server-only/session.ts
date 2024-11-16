@@ -1,4 +1,4 @@
-import { getIronSession, IronSession } from 'iron-session';
+import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 
 const COOKIE_NAME = 'session';
@@ -7,26 +7,15 @@ interface SessionPayload {
   userId: string;
 }
 
-class Session {
-  private readonly session: IronSession<SessionPayload>;
-  constructor(session: IronSession<SessionPayload>) {
-    this.session = session;
-  }
-  async login(payload: SessionPayload) {
-    this.session.userId = payload.userId;
-    await this.session.save();
-  }
-  logout() {
-    this.session.destroy();
-  }
-  getPayload(): SessionPayload | null {
-    if (this.session.userId == null) return null;
-
-    const payload: SessionPayload = {
-      userId: this.session.userId,
-    };
-    return payload;
-  }
+interface LoggedInSession {
+  readonly isLoggedIn: true;
+  readonly payload: Readonly<SessionPayload>;
+  login(payload: SessionPayload): Promise<void>;
+  logout(): void;
+}
+interface LoggedOutSession {
+  login(payload: SessionPayload): Promise<void>;
+  readonly isLoggedIn: false;
 }
 
 export const getSession = async () => {
@@ -43,5 +32,26 @@ export const getSession = async () => {
     },
   });
 
-  return new Session(session);
+  const login = async (payload: SessionPayload) => {
+    session.userId = payload.userId;
+    await session.save();
+  };
+
+  if (session.userId == null) {
+    return {
+      isLoggedIn: false,
+      login,
+    } as const satisfies LoggedOutSession;
+  }
+
+  return {
+    isLoggedIn: true,
+    login,
+    logout() {
+      session.destroy();
+    },
+    payload: {
+      userId: session.userId,
+    } as const,
+  } as const satisfies LoggedInSession;
 };
