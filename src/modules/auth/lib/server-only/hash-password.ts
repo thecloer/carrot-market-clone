@@ -1,8 +1,7 @@
 /**
- * `bcrypt` is using Node.js's modules that browsers don't have such as `fs`.
- * So, it's not possible to use `bcrypt` in the browser.
- * If this file is imported in `./index.ts`, it will be included in the client bundle.
- * To prevent this, use `bcrypt` only in this file and import it directly in the server files not throw the index file.
+ * `bcrypt` is using Node.js's specific modules.
+ * But browsers and edge runtime don't have those modules such as `fs`.
+ * So, it's not possible to import this file in the files that run on browsers or edge runtime such as `middleware.ts`.
  */
 
 import bcrypt from 'bcrypt';
