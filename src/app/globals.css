@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 @layer base {
   /* 
@@ -23,6 +21,6 @@
 
 @layer components {
   .primary-btn {
-    @apply bg-orange-500 hover:bg-orange-400 rounded-md w-full text-center text-lg text-white transition-colors font-medium disabled:bg-neutral-400 disabled:text-neutral-300 disabled:cursor-not-allowed;
+    @apply bg-orange-500 hover:bg-orange-400 disabled:bg-neutral-400 rounded-md w-full font-medium text-center text-lg text-white disabled:text-neutral-300 transition-colors disabled:cursor-not-allowed;
   }
 }

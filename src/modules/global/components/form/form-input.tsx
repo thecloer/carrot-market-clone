@@ -10,7 +10,7 @@ export const FormInput = ({ label, errors, className, ...props }: FormInputProps
       {label && <span className='text-neutral-300 has-[+:focus]:text-white'>{label}</span>}
       <input
         {...props}
-        className={`bg-transparent border-none rounded-md ring-1 ring-neutral-200 focus:ring-2 focus:ring-orange-500 w-full h-10 placeholder:text-neutral-400 transition peer focus:outline-none ${className}`}
+        className={`bg-transparent border-none rounded-md ring-1 ring-neutral-200 focus:ring-2 focus:ring-orange-500 w-full h-10 placeholder:text-neutral-400 transition peer focus:outline-hidden px-3.5 ${className}`}
       />
       {errors?.map((error, index) => (
         <span key={index} className='font-medium text-red-500'>
